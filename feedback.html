@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Feedback - AAS Hospital & Pathology</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --green: #1B4D3E;
+            --light-blue: #A7D8F0;
+            --red: #E63946;
+            --white: #ffffff;
+            --bg: #f5fafc;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f7fbfd, #eef8fd);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .hero-logo img {
+
+            width: 80px;
+
+            height: auto;
+
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--green);
+        }
+
+        .logo span {
+            color: var(--red);
+        }
+
+        .header h1 {
+            color: var(--green);
+            margin-top: 10px;
+            font-size: 32px;
+        }
+
+        .header p {
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .rating-banner {
+            background: #FFF4E5;
+            color: #B45309;
+            padding: 14px;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .option-card {
+            padding: 18px;
+            border-radius: 18px;
+            border: 2px solid #E5E7EB;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .option-card.selected {
+            background: #FFEAEA;
+            border-color: #EA1B23;
+        }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 35px;
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, .08);
+        }
+
+        .card-title {
+            text-align: center;
+            color: var(--green);
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            border: 1px solid #dfe7ea;
+            border-radius: 14px;
+            padding: 16px;
+            background: #fbfdfe;
+
+            transition: .25s;
+            cursor: pointer;
+        }
+
+        .option.selected {
+
+            background:
+                rgba(234, 27, 35, .08);
+
+            border-color: #EA1B23;
+
+            color: #EA1B23;
+
+        }
+
+        .option:hover {
+            border-color: var(--green);
+            transform: translateY(-2px);
+        }
+
+        .option input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--green);
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #444;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            border: 1px solid #dfe7ea;
+            border-radius: 14px;
+            padding: 14px;
+            font-family: inherit;
+            font-size: 15px;
+            transition: .25s;
+        }
+
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(27, 77, 62, .08);
+        }
+
+        textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            border: none;
+            border-radius: 14px;
+            padding: 16px;
+            background: var(--green);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: .25s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+        }
+
+        .success {
+            display: none;
+            text-align: center;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 15px;
+        }
+
+        .success h2 {
+            color: var(--green);
+            margin-bottom: 10px;
+        }
+
+        .success p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .submit-wrap {
+            position: sticky;
+            bottom: 10px;
+            z-index: 100;
+        }
+
+        .footer-note {
+            text-align: center;
+            margin-top: 20px;
+            color: #888;
+            font-size: 13px;
+        }
+
+        @media(max-width:768px) {
+
+            .options {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 25px;
+            }
+
+            .logo {
+                font-size: 38px;
+            }
+
+            .header h1 {
+                font-size: 26px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="header">
+
+            <div class="hero-logo">
+                <img src="Aas Logo.png" alt="AAS Logo">
+            </div>
+
+            <h1>AAS Hospital & Pathology</h1>
+
+            <p>Your feedback helps us improve patient care.</p>
+
+        </div>
+        <div class="rating-banner" id="ratingBanner"></div>
+
+        <div class="card" id="feedbackForm">
+
+            <h2 class="card-title">Help Us Improve</h2>
+
+            <p class="subtitle">
+                We value your feedback.
+
+                What could we improve to make your experience better? </p>
+
+            <div class="options">
+
+                <label class="option">
+                    <input type="checkbox" value="Waiting Time">
+                    ⏱️ Waiting Time
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Staff Behaviour">
+                    <span>Staff Behaviour</span>
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Billing Process">
+                    <span>Billing Process</span>
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Cleanliness">
+                    <span>Cleanliness</span>
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Doctor Availability">
+                    <span>Doctor Availability</span>
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Report Delay">
+                    <span>Report Delay</span>
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Communication">
+                    <span>Communication</span>
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Facilities">
+                    <span>Facilities</span>
+                </label>
+
+                <label class="option">
+                    <input type="checkbox" value="Other">
+                    <span>Other</span>
+                </label>
+
+            </div>
+
+            <div class="input-group">
+                <label>Name (Optional)</label>
+                <input type="text" id="name">
+            </div>
+
+            <div class="input-group">
+                <label>Phone Number (Optional)</label>
+                <input type="tel" id="phone">
+            </div>
+
+            <div class="input-group">
+                <label>Additional Comments</label>
+                <textarea id="comments" placeholder="Tell us more about your experience..."></textarea>
+
+                <div class="followup-section">
+
+                    <label class="followup-card">
+
+                        <input type="checkbox" id="followup">
+
+                        <span>
+                            📞 Request a Call Back.
+
+                            Our team will contact you personally
+                            to understand and resolve your concern.
+                        </span>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+            <div class="submit-wrap">
+
+                <button onclick="submitFeedback()">
+                    Submit Feedback
+                </button>
+
+            </div>
+
+        </div>
+
+        <div class="card success" id="thankYou">
+
+            <div class="success-icon">🙏</div>
+
+            <h2>❤️ Thank You For Helping Us Improve</h2>
+
+            <p>
+                Your feedback has been safely recorded and will help us improve patient care and service quality.
+                We appreciate the time you took to share your experience.
+            </p>
+
+        </div>
+
+        <div class="footer-note">
+            AAS Hospital & Pathology • Wardha
+        </div>
+
+    </div>
+
+    <script>
+        const rating = localStorage.getItem("rating");
+
+        const messages = {
+            "1": "😞 We're sorry your experience was not satisfactory.",
+            "2": "😕 We appreciate your feedback and want to improve.",
+            "3": "🙂 Thank you. Tell us how we can do better.",
+            "4": "😊 Thank you. What could have made your visit even better?"
+        };
+
+        document.getElementById(
+            "ratingBanner"
+        ).innerHTML = messages[rating];
+        const SCRIPT_URL =
+            "https://script.google.com/macros/s/AKfycbw-pCWG_45x8cWkx8oozGAeazeR7XUrsbS3KBF6SH5gDqxovxMiSpSa5wuFrv0-ZQ4e/exec";
+
+        async function submitFeedback() {
+
+            const issues = [];
+
+            document.querySelectorAll(
+                'input[type="checkbox"]:checked'
+            ).forEach(item => {
+                issues.push(item.value);
+            });
+
+            const response = await fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    rating: localStorage.getItem("rating"),
+                    name: document.getElementById("name").value,
+                    phone: document.getElementById("phone").value,
+                    issues: issues.join(", "),
+                    comments: document.getElementById("comments").value,
+                    followup:
+                        document.getElementById("followup").checked
+                            ? "YES"
+                            : "NO"
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+
+                document.getElementById("feedbackForm")
+                    .style.display = "none";
+
+                document.getElementById("thankYou")
+                    .style.display = "block";
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>

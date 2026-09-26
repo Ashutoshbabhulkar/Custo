@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AAS Review Generator Elite</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background:
+                linear-gradient(180deg,
+                    #D1ECF1 0%,
+                    #F8FBFC 50%,
+                    #FFFFFF 100%);
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        .wrap {
+            max-width: 1000px;
+            margin: auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+        }
+
+        h1 {
+            text-align: center;
+            color: #1B4D3E;
+        }
+
+        .grid {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 8px;
+
+        }
+
+        label {
+            border: 1px solid #ddd;
+            padding: 12px;
+            border-radius: 12px;
+            display: block;
+        }
+
+        button {
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .primary {
+
+            background: #EA1B23;
+
+            color: white;
+
+            width: 100%;
+
+            margin-top: 12px;
+
+            font-weight: 700;
+
+            transition: .25s;
+            padding: 18px;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+        }
+
+        .primary:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 10px 20px rgba(234, 27, 35, .25);
+
+        }
+
+        .secondary {
+
+            background: #005A63;
+
+            color: white;
+
+            width: 100%;
+
+            margin-top: 12px;
+
+            font-weight: 600;
+
+        }
+
+        textarea {
+
+            width: 100%;
+
+            min-height: 260px;
+
+            margin-top: 15px;
+
+            border: none;
+
+            border-left:
+                6px solid #005A63;
+
+            border-radius: 18px;
+
+            background: #F8FBFC;
+
+            padding: 22px;
+
+            line-height: 1.9;
+
+            font-size: 15px;
+
+            color: #333;
+
+            resize: none;
+
+            box-shadow:
+                inset 0 2px 8px rgba(0, 0, 0, .03);
+
+        }
+
+        .hero-review {
+
+            text-align: center;
+
+            background:
+                linear-gradient(135deg,
+                    #ffffff,
+                    #D1ECF1);
+
+            padding: 40px;
+
+            border-radius: 30px;
+
+            margin-bottom: 25px;
+
+            border-top:
+                6px solid #005A63;
+
+            box-shadow:
+                0 20px 45px rgba(0, 90, 99, .12);
+
+        }
+
+        .hero-logo {
+            margin-bottom: 20px;
+        }
+
+        .hero-logo img {
+            width: 120px;
+            height: auto;
+        }
+
+        .option-card {
+
+            --card-height: 30px;
+
+            border: 2px solid #E5E7EB;
+
+            border-radius: 16px;
+
+            height: var(--card-height);
+
+            padding: 0 14px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-start;
+
+            cursor: pointer;
+
+            transition: .25s;
+
+            background: white;
+
+            position: relative;
+
+        }
+
+        .option-card:hover {
+
+            transform: translateY(-3px);
+
+            border-color: #005A63;
+
+            box-shadow:
+                0 10px 20px rgba(0, 90, 99, .08);
+
+        }
+
+        .option-card.selected {
+
+            background: #D1ECF1;
+
+            border-color: #005A63;
+
+            color: #005A63;
+
+            box-shadow:
+                0 12px 25px rgba(0, 90, 99, .15);
+
+            transform: translateY(-3px);
+
+        }
+
+        .option-card.selected::after {
+
+            content: "✓";
+
+            position: absolute;
+
+            top: 10px;
+
+            right: 12px;
+
+            width: 24px;
+
+            height: 24px;
+
+            border-radius: 50%;
+
+            background: #005A63;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+        .option-card input {
+
+            display: none;
+
+        }
+
+        .card-title {
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            line-height: 1;
+
+        }
+
+        .generate-wrap {
+
+            position: sticky;
+
+            bottom: 12px;
+
+            z-index: 100;
+
+            margin-top: 20px;
+
+        }
+
+        .preview-title {
+
+            text-align: center;
+
+            color: #005A63;
+
+            margin-top: 25px;
+
+            margin-bottom: 10px;
+
+            font-size: 24px;
+
+            font-weight: 700;
+
+        }
+
+        .trust-box {
+
+            margin-top: 15px;
+
+            padding: 15px;
+
+            border-radius: 14px;
+
+            background: #D1ECF1;
+
+            color: #005A63;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+        }
+
+        .modal {
+
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, .6);
+
+            z-index: 9999;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+
+        }
+
+        .modal-content {
+
+            background: white;
+
+            border-radius: 24px;
+
+            padding: 30px;
+
+            width: 100%;
+
+            max-width: 360px;
+
+            text-align: center;
+
+            animation: popup .25s ease;
+
+            border-top: 6px solid #EA1B23;
+
+        }
+
+        @keyframes popup {
+
+            from {
+                transform: scale(.9);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+        }
+
+        .modal-icon {
+
+            font-size: 60px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .modal-content h2 {
+
+            color: #005A63;
+
+            margin-bottom: 12px;
+
+        }
+
+        .modal-content p {
+
+            color: #555;
+
+            margin-bottom: 18px;
+
+        }
+
+        .steps {
+
+            text-align: left;
+
+            background: #D1ECF1;
+
+            padding: 15px;
+
+            border-radius: 16px;
+
+            margin-bottom: 20px;
+
+            line-height: 1.8;
+
+        }
+
+        #continueBtn {
+
+            width: 100%;
+
+            border: none;
+
+            background: #EA1B23;
+
+            color: white;
+
+            padding: 16px;
+
+            border-radius: 14px;
+
+            font-size: 16px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+        }
+
+        @media(max-width:768px) {
+
+            body {
+                padding: 12px;
+            }
+
+            .hero-review {
+
+                text-align: center;
+
+                background:
+                    linear-gradient(135deg,
+                        #ffffff,
+                        #D1ECF1);
+
+                padding: 20px 16px;
+
+                border-radius: 24px;
+
+                margin-bottom: 18px;
+
+                border-top: 6px solid #005A63;
+
+            }
+
+            .hero-logo img {
+
+                width: 80px;
+
+                height: auto;
+
+            }
+
+            .hero-subtitle {
+
+                color: #555;
+
+                font-size: 16px;
+
+                margin-top: 10px;
+
+            }
+
+            .wrap {
+                padding: 18px;
+                border-radius: 18px;
+            }
+
+            .card-title {
+                font-size: 14px;
+            }
+
+            textarea {
+
+                min-height: 180px;
+
+                font-size: 15px;
+
+                line-height: 1.8;
+
+            }
+
+            .modal-content {
+                padding: 22px;
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero-review">
+
+        <div class="hero-logo">
+            <img src="Aas Logo.png" alt="AAS Logo">
+        </div>
+
+        <h1>
+            🌟 Thank You!
+        </h1>
+
+        <p class="hero-subtitle">
+
+            What impressed you most
+            about your visit? Your feedback helps other patients discover trusted
+            healthcare services in Wardha.
+
+        </p>
+    </section>
+    <div class="wrap">
+        <h1>AAS Hospital & Pathology</h1>
+        <p>Select 2-5 strengths.</p>
+        <div class="grid" id="opts"></div>
+        <div class="generate-wrap">
+
+            <button class="primary" onclick="generateReview()">
+                Generate Review
+            </button>
+
+        </div>
+        <div id="box" style="display:none">
+
+            <h2 class="preview-title">
+                Your Review Preview
+            </h2>
+            <textarea id="review"></textarea>
+
+            <div class="trust-box">
+
+                🔒 Your review will be copied automatically and the Google Review page will open when you click Submit.
+
+            </div>
+
+            <button class="secondary" onclick="generateReview()">
+                🔄 Generate Another Review
+            </button>
+
+            <button class="primary" onclick="submitGoogleReview()">
+                ⭐ Post My Google Review
+            </button>
+
+        </div>
+
+    </div>
+    <div id="copyModal" class="modal">
+
+        <div class="modal-content">
+
+            <div class="modal-icon">
+                ✅
+            </div>
+
+            <h2>Review Copied Successfully!</h2>
+
+            <p>
+                Your review has been copied to your clipboard.
+            </p>
+
+            <div class="steps">
+
+                <div style="font-size:18px;font-weight:700;margin-bottom:12px;color:#EA1B23;">
+                    ⚠️ IMPORTANT
+                </div>
+
+                <div>
+                    When Google opens:
+                </div>
+
+                <br>
+
+                <div>
+                    1️⃣ Tap inside the review text box
+                </div>
+
+                <div>
+                    2️⃣ Press and hold
+                </div>
+
+                <div>
+                    3️⃣ Tap <b>PASTE</b>
+                </div>
+
+                <div>
+                    4️⃣ Tap <b>POST REVIEW</b>
+                </div>
+
+                <br>
+
+                <div style="
+                background:white;
+                padding:12px;
+                border-radius:10px;
+                text-align:center;
+                font-weight:700;
+                color:#005A63;
+            ">
+                    📋 Your review is already copied.<br>
+                    You only need to paste it.
+                </div>
+
+            </div>
+
+            <button id="continueBtn">
+                📋 Review Copied • Open Google Review
+            </button>
+
+        </div>
+
+    </div>
+    <script>
+        const options = [
+
+            ['doctor', '🩺 Best Doctor in Wardha'],
+            ['surgeon', '🩻 Best Surgeon in Wardha'],
+            ['pathology', '🔬 Best Pathology Lab in Wardha'],
+
+            ['staff', '👨‍⚕️ Excellent Staff'],
+            ['reports', '⚡ Fast Reports'],
+            ['clean', '🧹 Clean Hospital'],
+
+            ['emergency', '🚑 Emergency Care'],
+            ['affordable', '💰 Affordable Treatment'],
+            ['friendly', '😊 Friendly Doctors'],
+
+            ['modern', '🏥 Modern Facilities'],
+            ['diagnosis', '🧠 Accurate Diagnosis'],
+            ['care', '❤️ Patient-Centered Care']
+
+        ];
+        document.getElementById('opts').innerHTML =
+            options.map(o => `<label class="option-card">
+            <input
+            type="checkbox"
+            value="${o[0]}">
+
+            <div class="card-title">
+            ${o[1]}
+            </div>
+
+            </label>
+
+            `).join('');
+
+        document
+            .querySelectorAll(".option-card")
+            .forEach(card => {
+
+                card.addEventListener("click", function () {
+
+                    const checkbox =
+                        this.querySelector("input");
+
+                    checkbox.checked =
+                        !checkbox.checked;
+
+                    if (checkbox.checked) {
+
+                        this.classList.add("selected");
+
+                    } else {
+
+                        this.classList.remove("selected");
+
+                    }
+
+                });
+
+            });
+
+        const openings = [
+            "I recently visited AAS Hospital and was very impressed with the overall experience.",
+            "My experience at AAS Hospital & Pathology exceeded my expectations.",
+            "I am grateful for the care and attention I received during my visit.",
+            "I would like to thank the entire team for the excellent treatment provided.",
+            "Finding reliable healthcare can be difficult, but my experience here was reassuring.",
+            "I visited AAS Hospital for treatment and was pleasantly surprised by the quality of care.",
+            "From the moment I arrived, I felt that I was in good hands.",
+            "The professionalism shown by the medical team stood out from the beginning.",
+            "I had heard positive things about AAS Hospital, and my experience confirmed them.",
+            "My family and I had a very positive experience during our recent visit.",
+            "I was impressed by how smoothly everything was managed throughout my treatment.",
+            "This was my first visit to AAS Hospital, and it left a very positive impression.",
+            "I recently underwent treatment here and felt supported throughout the process.",
+            "The care I received was both professional and compassionate.",
+            "I wanted to take a moment to appreciate the excellent healthcare services provided here.",
+            "My visit was comfortable, efficient, and professionally managed.",
+            "I had a wonderful experience and felt genuinely cared for.",
+            "The hospital staff made a stressful situation much easier to handle.",
+            "I am extremely satisfied with the services I received during my visit.",
+            "The level of patient care here deserves recognition.",
+            "I felt welcomed and supported throughout my entire experience.",
+            "The dedication shown by the healthcare team was truly impressive.",
+            "I recently visited for consultation and was highly satisfied with the service.",
+            "The quality of care provided here reflects a strong commitment to patients.",
+            "I appreciate the professionalism and kindness shown by everyone involved in my treatment.",
+            "This hospital provided one of the best healthcare experiences I have had.",
+            "I felt confident in the treatment process from the very beginning.",
+            "My treatment journey here was smooth, reassuring, and well-organized.",
+            "I am thankful for the guidance and support provided by the team.",
+            "Every aspect of my visit was handled with care and professionalism.",
+            "I left the hospital feeling satisfied and well-informed.",
+            "The entire experience reflected a high standard of medical care.",
+            "I was impressed by the attention given to every detail of my treatment.",
+            "My concerns were addressed with patience and professionalism.",
+            "The team went above and beyond to ensure a positive experience.",
+            "I am happy to share my positive experience with AAS Hospital.",
+            "The commitment to patient wellbeing was evident throughout my visit.",
+            "My experience here reinforced the importance of quality healthcare.",
+            "The healthcare services provided were both efficient and compassionate.",
+            "I would like to express my sincere appreciation for the outstanding care I received."
+        ];
+
+        const closings = [
+            "I would highly recommend AAS Hospital to anyone seeking quality healthcare services in Wardha.",
+            "Thank you to the entire team for their dedication and professionalism.",
+            "I would confidently recommend this hospital to friends and family.",
+            "A trusted choice for healthcare and diagnostics in Wardha.",
+            "I truly appreciate the efforts of everyone involved in my care.",
+            "Wishing the team continued success in serving the community.",
+            "The experience exceeded my expectations in every way.",
+            "I look forward to choosing this hospital again whenever needed.",
+            "Highly recommended for anyone looking for reliable medical care.",
+            "Thank you for making my healthcare experience so positive.",
+            "The quality of service here deserves recognition.",
+            "I am grateful for the care and support I received.",
+            "The team has earned my trust and confidence.",
+            "This hospital sets a great example of patient-focused healthcare.",
+            "One of the most satisfying healthcare experiences I have had.",
+            "I am happy to recommend their services without hesitation.",
+            "The professionalism and compassion shown here were exceptional.",
+            "I appreciate the commitment to delivering quality healthcare.",
+            "Thank you for providing such dependable medical services.",
+            "The hospital continues to maintain high standards of patient care.",
+            "I am thankful for the positive experience and excellent treatment.",
+            "A dependable healthcare destination for patients and families alike.",
+            "The staff and doctors deserve recognition for their outstanding work.",
+            "My overall experience was excellent and memorable.",
+            "I would gladly return if I ever need medical care in the future.",
+            "The dedication shown by the team was truly commendable.",
+            "This hospital has earned a strong reputation for good reason.",
+            "I left feeling reassured, informed, and well cared for.",
+            "Thank you for making a difficult situation much easier.",
+            "The entire process reflected professionalism and genuine care.",
+            "I appreciate the attention given to patient comfort and wellbeing.",
+            "This was a healthcare experience worth sharing.",
+            "I felt respected and valued throughout my treatment journey.",
+            "The quality of care speaks for itself.",
+            "A hospital that truly puts patients first.",
+            "The services provided were efficient, reliable, and compassionate.",
+            "I would encourage others to consider this hospital with confidence.",
+            "Thank you for maintaining such high standards of care.",
+            "The positive impact of your work is greatly appreciated.",
+            "My experience here has been overwhelmingly positive."
+        ];
+
+        const brands = [
+            "AAS Hospital",
+            "AAS Hospital & Pathology",
+            "the hospital",
+            "the healthcare team",
+            "the medical team",
+            "the doctors and staff",
+            "the entire hospital team",
+            "the care team",
+            "the healthcare professionals here",
+            "the team at AAS Hospital",
+            "the medical staff",
+            "the clinical team",
+            "the hospital management and staff",
+            "the specialists and support team",
+            "the healthcare providers",
+            "the professionals at AAS Hospital",
+            "the treatment team",
+            "the dedicated staff and doctors",
+            "the patient care team",
+            "the medical professionals",
+            "the diagnostic and healthcare team",
+            "the hospital's healthcare staff",
+            "the caring professionals here",
+            "the experienced medical team",
+            "everyone involved in patient care"
+        ];
+
+        const seoMentions = [
+            "quality healthcare services in Wardha",
+            "trusted healthcare services in Wardha",
+            "reliable medical care in Wardha",
+            "advanced healthcare facilities in Wardha",
+            "patient-focused healthcare in Wardha",
+            "professional healthcare services in Wardha",
+            "quality diagnostics and treatment in Wardha",
+            "modern healthcare solutions in Wardha",
+            "trusted medical professionals in Wardha",
+            "comprehensive healthcare services in Wardha"
+        ];
+
+        const localServiceMentions = [
+
+            "best pathology lab in Wardha",
+            "trusted pathology services in Wardha",
+            "laparoscopic surgery specialist in Wardha",
+            "gallbladder surgery in Wardha",
+            "appendix surgery in Wardha",
+            "hernia surgery in Wardha",
+            "health checkup services in Wardha",
+            "diagnostic center in Wardha",
+            "general surgery services in Wardha",
+            "advanced healthcare services in Wardha"
+
+        ];
+        const laparoscopicReviewSentences = [
+
+            "My recovery was much quicker than I expected thanks to the laparoscopic procedure.",
+
+            "The minimally invasive approach helped reduce discomfort and made recovery smoother.",
+
+            "I was impressed by the expertise shown during the laparoscopic treatment.",
+
+            "The surgical team explained the laparoscopic procedure clearly and made me feel comfortable.",
+
+            "The entire laparoscopic surgery process was handled professionally from consultation to recovery.",
+
+            "I appreciated the modern surgical techniques used during my treatment.",
+
+            "The procedure was performed efficiently and the post-operative care was excellent.",
+
+            "I experienced minimal discomfort and was able to resume normal activities sooner than expected.",
+
+            "The surgeon's expertise in laparoscopic treatment gave me complete confidence.",
+
+            "The hospital's advanced surgical facilities contributed to a positive treatment experience."
+
+        ];
+
+        const laparoscopicSeoMentions = [
+
+            "advanced laparoscopic surgery in Wardha",
+            "minimally invasive surgical treatment",
+            "expert laparoscopic surgical care",
+            "modern laparoscopic procedures",
+            "safe and effective laparoscopic surgery",
+            "experienced laparoscopic surgeons",
+            "advanced keyhole surgery techniques",
+            "professional laparoscopic treatment services",
+            "trusted laparoscopic surgery specialists",
+            "high-quality surgical care in Wardha",
+            "modern surgical facilities and expertise",
+            "successful minimally invasive procedures",
+            "patient-focused surgical treatment",
+            "excellent laparoscopic care and support",
+            "advanced surgical treatment options",
+            "specialized laparoscopic surgery services",
+            "efficient and comfortable surgical experience",
+            "expert surgical guidance and care",
+            "reliable minimally invasive treatment",
+            "comprehensive laparoscopic surgical services"
+
+        ];
+        const pathologySeoMentions = [
+
+            "accurate pathology services in Wardha",
+            "trusted pathology laboratory in Wardha",
+            "reliable diagnostic services in Wardha",
+            "timely pathology reports in Wardha",
+            "advanced pathology testing services",
+            "high-quality laboratory services in Wardha",
+            "professional diagnostic support in Wardha",
+            "dependable pathology and laboratory services",
+            "modern pathology facilities in Wardha",
+            "efficient blood testing and diagnostics",
+            "accurate medical testing and reporting",
+            "comprehensive pathology services",
+            "fast and reliable laboratory reports",
+            "well-equipped diagnostic laboratory",
+            "patient-focused pathology services",
+            "advanced diagnostic testing facilities",
+            "quality pathology and healthcare services",
+            "trusted diagnostics and pathology care",
+            "professional laboratory testing experience",
+            "efficient pathology and diagnostic solutions"
+
+        ];
+        const lib = {
+            doctor: [
+                "The doctors were highly knowledgeable and took time to explain every aspect of my treatment.",
+                "I was impressed by the expertise and professionalism shown by the doctors.",
+                "The medical team listened carefully to my concerns and provided clear guidance.",
+                "The doctors demonstrated exceptional clinical knowledge throughout my visit.",
+                "I felt confident in the treatment plan because everything was explained thoroughly.",
+                "The doctors were approachable, patient, and willing to answer all my questions.",
+                "The level of medical expertise here is truly commendable.",
+                "I appreciated how carefully the doctors assessed my condition before recommending treatment.",
+                "The consultation was detailed, informative, and reassuring.",
+                "The doctors treated me with genuine care and respect.",
+                "Their ability to explain complex medical issues in simple terms was impressive.",
+                "I felt that my health concerns were taken seriously from the very beginning.",
+                "The doctors combined professional expertise with a compassionate approach.",
+                "The quality of medical advice I received exceeded my expectations.",
+                "The consultation process was thorough and patient-focused.",
+                "I was impressed by the doctors' commitment to achieving the best possible outcome.",
+                "The healthcare professionals here inspire confidence and trust.",
+                "Every interaction with the doctors reflected experience and professionalism.",
+                "I felt reassured knowing I was being treated by such skilled medical professionals.",
+                "The doctors provided excellent care while maintaining clear and open communication."
+            ],
+
+            surgeon: [
+                "The surgical team demonstrated exceptional skill and professionalism.",
+                "I felt completely confident in the surgeon's expertise throughout the procedure.",
+                "The surgeon explained the process clearly and addressed all my concerns.",
+                "The surgical care provided was outstanding from start to finish.",
+                "I was impressed by the precision and professionalism of the surgical team.",
+                "The surgeon's experience and confidence were evident throughout my treatment.",
+                "The entire surgical process was managed efficiently and carefully.",
+                "I felt reassured knowing I was in capable hands.",
+                "The attention to detail shown by the surgical team was remarkable.",
+                "The surgeon maintained excellent communication before and after the procedure.",
+                "The professionalism displayed during treatment exceeded my expectations.",
+                "The surgical outcome was excellent and the recovery guidance was very helpful.",
+                "The team ensured I felt informed and comfortable throughout the process.",
+                "The expertise of the surgeon gave me confidence from the very beginning.",
+                "Every stage of the procedure was handled with care and precision.",
+                "The surgical department reflects a high standard of healthcare.",
+                "I appreciate the dedication and expertise shown by the surgeon.",
+                "The procedure was carried out smoothly and professionally.",
+                "The surgeon's calm and reassuring approach made a significant difference.",
+                "I am grateful for the excellent surgical care I received."
+            ],
+
+            pathology: [
+                "The pathology services were accurate, efficient, and dependable.",
+                "Reports were delivered on time without compromising quality.",
+                "The laboratory team maintained high standards of accuracy and professionalism.",
+                "I was impressed by the efficiency of the diagnostic services.",
+                "The pathology department provided reliable and timely results.",
+                "The report turnaround time was excellent.",
+                "The diagnostic process was smooth and well organized.",
+                "I appreciated the accuracy and reliability of the pathology services.",
+                "The laboratory staff handled everything professionally.",
+                "The diagnostic facilities were modern and well equipped.",
+                "The reports were detailed, accurate, and easy to understand.",
+                "The pathology team ensured a seamless testing experience.",
+                "I received my reports much sooner than expected.",
+                "The commitment to accuracy was evident throughout the process.",
+                "The diagnostic services helped facilitate timely treatment decisions.",
+                "The laboratory department operates with impressive efficiency.",
+                "I felt confident in the quality of the diagnostic results.",
+                "The entire testing process was convenient and stress-free.",
+                "The pathology services reflected a strong commitment to patient care.",
+                "The laboratory team delivered dependable results with remarkable professionalism."
+            ],
+
+            staff: [
+                "The staff was courteous, helpful, and attentive throughout my visit.",
+                "Every staff member treated me with kindness and respect.",
+                "The support team ensured a comfortable and positive experience.",
+                "The professionalism of the staff was evident from the moment I arrived.",
+                "I was impressed by how organized and efficient the staff was.",
+                "The staff maintained excellent communication throughout the process.",
+                "Everyone I interacted with was friendly and approachable.",
+                "The support provided by the staff made the entire experience stress-free.",
+                "The staff consistently demonstrated patience and professionalism.",
+                "I appreciated the warm and welcoming atmosphere created by the team.",
+                "The hospital staff went above and beyond to assist patients.",
+                "The level of customer service exceeded my expectations.",
+                "Every interaction reflected genuine care and concern for patients.",
+                "The staff was responsive, efficient, and supportive.",
+                "The dedication shown by the team was truly commendable.",
+                "The support staff played an important role in making my visit comfortable.",
+                "The team worked together seamlessly to ensure a positive experience.",
+                "I felt welcomed and valued throughout my time at the hospital.",
+                "The staff handled every situation professionally and calmly.",
+                "Their commitment to patient satisfaction was evident at every stage."
+            ],
+            reports: [
+                "Reports were delivered promptly and accurately.",
+                "The turnaround time for reports was excellent.",
+                "I received my reports much sooner than expected.",
+                "The reporting process was smooth and efficient.",
+                "Diagnostic reports were provided without unnecessary delays.",
+                "The speed and accuracy of reporting were impressive.",
+                "I appreciated how quickly the reports were made available.",
+                "Timely reports helped ensure faster treatment decisions.",
+                "The entire reporting process was well organized.",
+                "Results were delivered exactly when promised.",
+                "The pathology reports were detailed and easy to understand.",
+                "Quick access to reports made the treatment process smoother.",
+                "The hospital maintains excellent efficiency in report delivery.",
+                "I was impressed by the promptness of the diagnostic reporting.",
+                "The reports were accurate, reliable, and delivered on time.",
+                "The reporting system was convenient and hassle-free.",
+                "I never had to follow up repeatedly for my reports.",
+                "The hospital's commitment to timely reporting was evident.",
+                "Receiving reports quickly reduced a lot of stress and uncertainty.",
+                "The speed of service exceeded my expectations."
+            ],
+
+            clean: [
+                "The hospital maintained exceptional cleanliness and hygiene standards.",
+                "The environment was spotless and well organized.",
+                "Cleanliness was evident throughout the facility.",
+                "The hospital premises were neat, comfortable, and hygienic.",
+                "I was impressed by the attention given to cleanliness.",
+                "The entire facility was maintained to a very high standard.",
+                "The clean environment contributed to a positive experience.",
+                "Every area of the hospital appeared well maintained.",
+                "Hygiene protocols were clearly followed throughout the facility.",
+                "The hospital provided a safe and hygienic environment for patients.",
+                "Clean surroundings made the experience more comfortable.",
+                "The facility reflected a strong commitment to patient safety.",
+                "The hospital's cleanliness exceeded my expectations.",
+                "Attention to hygiene was visible in every department.",
+                "The premises were consistently clean and organized.",
+                "The hospital provided a welcoming and hygienic atmosphere.",
+                "The clean environment helped create confidence and comfort.",
+                "I appreciated the high standards of cleanliness maintained here.",
+                "The facility was well cared for and professionally maintained.",
+                "The hospital reflects a strong focus on hygiene and patient wellbeing."
+            ],
+
+            emergency: [
+                "Emergency services were prompt and efficiently managed.",
+                "The emergency team responded quickly and professionally.",
+                "Urgent care was provided without unnecessary delays.",
+                "The responsiveness of the emergency department was impressive.",
+                "The emergency staff handled the situation calmly and effectively.",
+                "I received immediate attention when it was needed most.",
+                "The emergency team worked efficiently under pressure.",
+                "Emergency care was delivered with professionalism and compassion.",
+                "The speed of response exceeded my expectations.",
+                "The staff ensured timely medical attention during a stressful situation.",
+                "The emergency department was well organized and efficient.",
+                "I felt reassured by the competence of the emergency team.",
+                "Critical care was handled with expertise and confidence.",
+                "The hospital demonstrated excellent emergency management.",
+                "The team remained calm and focused throughout the process.",
+                "Prompt emergency care made a significant difference.",
+                "The emergency services reflected a high standard of healthcare.",
+                "The doctors and staff responded quickly to my needs.",
+                "I was impressed by the preparedness of the emergency department.",
+                "The emergency care experience was smooth, professional, and reassuring."
+            ],
+
+            affordable: [
+                "The treatment was affordable without compromising quality.",
+                "The hospital offers excellent value for the services provided.",
+                "Healthcare was delivered in a cost-effective and patient-friendly manner.",
+                "I appreciated the transparent and reasonable pricing.",
+                "The quality of care received was exceptional considering the affordability.",
+                "The services provided were worth every rupee spent.",
+                "The hospital maintains a good balance between cost and quality.",
+                "Affordable treatment options made healthcare more accessible.",
+                "I was satisfied with both the quality and cost of treatment.",
+                "The pricing structure was fair and transparent.",
+                "The hospital provides quality healthcare at reasonable rates.",
+                "I appreciated the honest and straightforward billing process.",
+                "The cost of treatment was manageable without compromising care.",
+                "The services were affordable while maintaining professional standards.",
+                "The hospital offers excellent healthcare value for patients.",
+                "The treatment costs were clearly explained in advance.",
+                "I found the overall experience both affordable and reliable.",
+                "The hospital ensures quality care remains accessible to patients.",
+                "The affordability of services was a pleasant surprise.",
+                "Reasonable pricing combined with excellent care made a positive impression."
+            ],
+
+            friendly: [
+                "The doctors were approachable and easy to talk to.",
+                "The medical team created a welcoming atmosphere.",
+                "I appreciated the friendly and caring attitude of the doctors.",
+                "The doctors took time to listen and understand my concerns.",
+                "The healthcare professionals treated patients with warmth and respect.",
+                "I felt comfortable discussing my health concerns with the doctors.",
+                "The friendly nature of the doctors made the experience reassuring.",
+                "The doctors were patient, kind, and understanding.",
+                "Every interaction with the medical team was positive and supportive.",
+                "The doctors explained everything in a calm and friendly manner.",
+                "I felt genuinely cared for throughout my treatment.",
+                "The approachable nature of the doctors inspired confidence.",
+                "The doctors ensured I felt comfortable at every stage.",
+                "The medical team combined professionalism with friendliness.",
+                "The doctors treated me like a person, not just a patient.",
+                "The supportive attitude of the doctors stood out.",
+                "I appreciated the personal attention provided by the medical team.",
+                "The doctors made a stressful situation easier to handle.",
+                "The friendliness of the healthcare team was truly commendable.",
+                "The positive attitude of the doctors contributed greatly to my experience."
+            ],
+
+            modern: [
+                "The facilities were modern and well equipped.",
+                "The hospital uses advanced infrastructure to support quality care.",
+                "Modern facilities contributed to a smooth patient experience.",
+                "The hospital combines technology with patient comfort.",
+                "The equipment and facilities reflected high healthcare standards.",
+                "I was impressed by the modern environment and infrastructure.",
+                "The hospital is equipped with advanced medical technology.",
+                "The facilities support efficient and effective patient care.",
+                "The modern setup enhanced the overall treatment experience.",
+                "The infrastructure reflects a commitment to healthcare excellence.",
+                "The hospital maintains up-to-date medical facilities.",
+                "The advanced equipment inspired confidence in the treatment process.",
+                "Modern technology helps ensure quality patient care.",
+                "The facilities were comfortable, efficient, and professionally maintained.",
+                "The hospital provides a modern healthcare experience.",
+                "The infrastructure supports accurate diagnosis and treatment.",
+                "I appreciated the well-equipped and patient-friendly environment.",
+                "The facilities exceeded my expectations in terms of quality and comfort.",
+                "The hospital demonstrates a strong investment in modern healthcare.",
+                "The advanced facilities helped make the experience more reassuring."
+            ],
+
+            diagnosis: [
+                "The diagnostic process was thorough and accurate.",
+                "I was impressed by the attention given to diagnostic accuracy.",
+                "The medical assessments were detailed and reliable.",
+                "Accurate diagnosis contributed to effective treatment planning.",
+                "The doctors carefully evaluated my condition before recommending treatment.",
+                "The diagnostic services inspired confidence and trust.",
+                "I appreciated the thoroughness of the medical evaluation.",
+                "The hospital demonstrated a strong commitment to accurate diagnosis.",
+                "Every aspect of the assessment process was handled professionally.",
+                "The diagnostic standards maintained here are impressive.",
+                "I felt reassured by the detailed medical examination.",
+                "The doctors ensured a complete understanding of my condition.",
+                "The quality of diagnostic services exceeded my expectations.",
+                "Accurate assessments helped provide clarity and peace of mind.",
+                "The diagnosis process was both efficient and dependable.",
+                "The hospital's approach to diagnosis reflected professionalism and expertise.",
+                "I was impressed by the attention to detail during evaluation.",
+                "The medical team ensured that no aspect of my condition was overlooked.",
+                "The diagnostic process was comprehensive and patient-focused.",
+                "The hospital maintains high standards of diagnostic excellence."
+            ],
+
+            care: [
+                "The patient-centered approach made me feel valued and respected.",
+                "Compassionate care was evident throughout my experience.",
+                "The focus on patient wellbeing was clear at every stage.",
+                "I appreciated the personal attention provided by the healthcare team.",
+                "The doctors and staff genuinely cared about my comfort and recovery.",
+                "The hospital places patients at the center of its services.",
+                "Every decision appeared focused on achieving the best outcome for patients.",
+                "The care provided was both professional and compassionate.",
+                "I felt supported and reassured throughout my treatment journey.",
+                "The team demonstrated a genuine commitment to patient wellbeing.",
+                "The hospital's approach to care exceeded my expectations.",
+                "The staff took time to understand my concerns and priorities.",
+                "The healthcare team made me feel comfortable and respected.",
+                "I appreciated the empathy shown during my treatment process.",
+                "The patient experience was clearly a top priority.",
+                "The care provided reflected both expertise and compassion.",
+                "The team consistently prioritized comfort and communication.",
+                "I felt listened to and involved in decisions regarding my treatment.",
+                "The hospital maintains an impressive standard of patient care.",
+                "The dedication to patient satisfaction was evident throughout my visit."
+            ]
+        };
+
+        let last = "";
+        let lastOpening = "";
+
+        function pick(a) { return a[Math.floor(Math.random() * a.length)] }
+        function shuffle(arr) {
+
+            let a = [...arr];
+
+            for (let i = a.length - 1; i > 0; i--) {
+
+                const j =
+                    Math.floor(
+                        Math.random() * (i + 1)
+                    );
+
+                [a[i], a[j]] =
+                    [a[j], a[i]];
+            }
+
+            return a;
+        }
+        function randomStructure(
+            opening,
+            body,
+            brandLine,
+            seoLines,
+            closing
+        ) {
+
+            const structures = [
+                () => [
+                    opening,
+                    brandLine,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    ...body,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    ...body.slice(0, 1),
+                    brandLine,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    ...body,
+                    ...seoLines,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    brandLine,
+                    ...body,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    ...body,
+                    brandLine,
+                    ...seoLines,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    brandLine,
+                    ...body,
+                    ...seoLines,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    ...body,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    ...seoLines,
+                    ...body,
+                    brandLine,
+                    closing
+                ],
+
+                () => [
+                    opening,
+                    brandLine,
+                    ...seoLines,
+                    ...body,
+                    closing
+                ]
+
+            ];
+
+            return pick(structures)();
+
+        }
+
+        const reviewTones = {
+
+            grateful: [
+
+                "I am genuinely thankful for the care I received.",
+                "I would like to express my sincere appreciation for the support provided.",
+                "I am grateful for the professionalism and kindness shown throughout my treatment.",
+                "The experience left me feeling thankful and reassured.",
+                "I truly appreciate the effort and dedication of the healthcare team.",
+                "I feel fortunate to have received such attentive medical care.",
+                "The compassion shown during my treatment made a significant difference.",
+                "I am thankful for the guidance and support provided at every stage.",
+                "The level of care I received deserves sincere appreciation.",
+                "I deeply appreciate the commitment shown by the doctors and staff.",
+                "The support I received throughout my treatment journey was invaluable.",
+                "I am grateful for the patience and understanding demonstrated by the team.",
+                "The care provided exceeded my expectations and earned my gratitude.",
+                "I would like to acknowledge the dedication shown by everyone involved in my treatment.",
+                "The kindness and professionalism of the healthcare team are greatly appreciated."
+
+            ],
+
+            professional: [
+
+                "The quality of healthcare services provided was impressive.",
+                "The entire process reflected strong professional standards.",
+                "The hospital maintains a high level of medical excellence.",
+                "The experience demonstrated a commitment to quality healthcare.",
+                "The standards of care exceeded my expectations.",
+                "The professionalism displayed throughout my treatment was remarkable.",
+                "The healthcare team consistently maintained excellent standards.",
+                "The medical services were delivered with efficiency and expertise.",
+                "The hospital reflects a strong focus on clinical excellence.",
+                "The quality of treatment and patient management was commendable.",
+                "The entire experience was handled with professionalism and attention to detail.",
+                "The level of organization and efficiency was highly impressive.",
+                "The hospital demonstrates a strong commitment to healthcare quality.",
+                "The expertise shown by the medical professionals inspired confidence.",
+                "The services provided reflected a patient-focused and professional approach."
+
+            ],
+
+            family: [
+
+                "My family and I were extremely satisfied with the experience.",
+                "The support provided to my family was greatly appreciated.",
+                "Our family felt comfortable and reassured throughout the treatment process.",
+                "The hospital created a positive experience for both patients and family members.",
+                "The entire family felt supported and well informed.",
+                "My loved ones were treated with kindness and respect throughout the process.",
+                "The healthcare team ensured our family remained informed at every stage.",
+                "We felt confident knowing our family member was receiving excellent care.",
+                "The support extended to family members made a meaningful difference.",
+                "The doctors and staff created a reassuring environment for our family.",
+                "Our concerns were addressed patiently and professionally.",
+                "The care provided helped ease the stress of a challenging situation.",
+                "The healthcare team treated our family with compassion and understanding.",
+                "The experience was positive for both the patient and accompanying family members.",
+                "The hospital demonstrated genuine concern for the wellbeing of our family."
+
+            ],
+
+            surgery: [
+
+                "The surgical care I received was excellent from start to finish.",
+                "The entire treatment process was managed with professionalism and expertise.",
+                "I felt confident throughout the surgical journey.",
+                "The healthcare team ensured a smooth treatment experience.",
+                "The quality of surgical care exceeded my expectations.",
+                "The surgeon explained every aspect of the procedure clearly and patiently.",
+                "I felt reassured by the expertise demonstrated throughout the treatment process.",
+                "The professionalism of the surgical team inspired complete confidence.",
+                "The procedure was handled efficiently and with great attention to detail.",
+                "The support provided before and after surgery was exceptional.",
+                "I appreciated the careful guidance provided during recovery.",
+                "The surgical team demonstrated both skill and compassion.",
+                "The treatment process was smooth and professionally managed.",
+                "The expertise of the surgeon contributed greatly to a positive outcome.",
+                "The entire surgical experience was handled with exceptional care."
+
+            ],
+
+            diagnostic: [
+
+                "The diagnostic services were efficient and dependable.",
+                "The attention to diagnostic accuracy was impressive.",
+                "The pathology and diagnostic facilities were excellent.",
+                "I appreciated the reliability of the testing process.",
+                "The diagnostic services contributed greatly to a positive experience.",
+                "The laboratory team maintained a high standard of professionalism.",
+                "The efficiency of the diagnostic process exceeded my expectations.",
+                "The pathology services were accurate, timely, and reliable.",
+                "I was impressed by the quality of diagnostic support provided.",
+                "The testing process was smooth, organized, and stress-free.",
+                "The hospital demonstrated a strong commitment to diagnostic accuracy.",
+                "The reports were delivered efficiently and helped facilitate timely treatment.",
+                "The diagnostic team ensured a seamless experience from start to finish.",
+                "The quality of pathology services inspired confidence and trust.",
+                "The entire diagnostic process reflected professionalism and expertise."
+
+            ],
+            patient: [
+
+                "As a patient, I felt comfortable and well cared for throughout my visit.",
+
+                "My experience from consultation to treatment was smooth and reassuring.",
+
+                "I felt confident in the care I received from the very beginning.",
+
+                "The entire process was handled professionally and efficiently.",
+
+                "I appreciated the time taken to understand my concerns.",
+
+                "I felt listened to and respected during every interaction.",
+
+                "The healthcare team made me feel comfortable throughout my treatment.",
+
+                "My concerns were addressed clearly and patiently.",
+
+                "I was impressed by the attention given to my wellbeing.",
+
+                "The experience exceeded my expectations in many ways.",
+
+                "I felt supported at every stage of the treatment process.",
+
+                "The doctors and staff ensured I was well informed throughout my visit.",
+
+                "I was treated with professionalism and genuine care.",
+
+                "The level of attention provided made a positive difference.",
+
+                "I felt reassured knowing I was receiving quality medical care.",
+
+                "The entire experience was organized and patient-friendly.",
+
+                "I appreciated the clear communication provided throughout treatment.",
+
+                "I never felt rushed during consultations or treatment discussions.",
+
+                "The healthcare team ensured all my questions were answered thoroughly.",
+
+                "I was impressed by the professionalism demonstrated throughout my visit.",
+
+                "My treatment journey was smoother than I expected.",
+
+                "The atmosphere was welcoming and reassuring from the start.",
+
+                "I felt valued as a patient throughout the entire process.",
+
+                "The quality of care I received was consistently excellent.",
+
+                "The team maintained excellent communication throughout my treatment.",
+
+                "I appreciated the personal attention given to my health concerns.",
+
+                "The doctors took time to explain everything in a simple and understandable way.",
+
+                "I felt confident in every step of the treatment process.",
+
+                "The hospital provided a comfortable and supportive environment.",
+
+                "The overall experience reflected a strong commitment to patient care.",
+
+                "I left feeling satisfied, informed, and reassured.",
+
+                "The staff and doctors worked together to create a positive experience.",
+
+                "I appreciated the patience and understanding shown by the healthcare team.",
+
+                "The treatment process was efficient without feeling rushed.",
+
+                "The level of professionalism throughout my visit was impressive.",
+
+                "I felt that my wellbeing was always the top priority.",
+
+                "The healthcare team made the entire process stress-free and comfortable.",
+
+                "My experience reflected both medical expertise and compassionate care.",
+
+                "The quality of service provided exceeded my expectations.",
+
+                "I would not hesitate to return if I require medical care in the future."
+
+            ]
+
+        };
+
+        const toneWeights = [
+
+            "patient", "patient", "patient", "patient", "patient", "patient", "patient",
+
+            "grateful", "grateful",
+
+            "professional", "professional",
+
+            "family",
+
+            "surgery",
+
+            "diagnostic"
+
+        ];
+
+        function generateReview() {
+            const sel = [...document.querySelectorAll('input:checked')].map(x => x.value);
+            if (sel.length < 2 || sel.length > 5) { alert('Select between 2 and 5 options'); return; }
+            let r = "";
+            do {
+                let selectedTone = "patient";
+
+                if (
+                    sel.includes("surgeon")
+                    &&
+                    Math.random() < 0.60
+                ) {
+                    selectedTone = "surgery";
+                }
+                else if (
+                    (
+                        sel.includes("pathology")
+                        ||
+                        sel.includes("reports")
+                        ||
+                        sel.includes("diagnosis")
+                    )
+                    &&
+                    Math.random() < 0.50
+                ) {
+                    selectedTone = "diagnostic";
+                }
+                else {
+
+                    selectedTone = pick(toneWeights);
+
+                };
+
+                let openingLine;
+
+                do {
+
+                    openingLine =
+                        pick(openings);
+
+                }
+                while (
+                    openingLine === lastOpening
+                );
+
+                lastOpening = openingLine;
+
+                const toneSentence =
+                    pick(
+                        reviewTones[selectedTone]
+                    );
+
+                let body = [];
+                let used = new Set();
+
+                const reviewLength =
+                    pick([
+                        "short",
+                        "medium",
+                        "long"
+                    ]);
+
+                let selectedItems =
+                    shuffle(sel);
+
+                if (reviewLength === "short") {
+
+                    selectedItems =
+                        selectedItems.slice(
+                            0,
+                            Math.min(2, selectedItems.length)
+                        );
+
+                }
+
+                if (reviewLength === "medium") {
+
+                    selectedItems =
+                        selectedItems.slice(
+                            0,
+                            Math.min(3, selectedItems.length)
+                        );
+
+                }
+
+                selectedItems.forEach(k => {
+
+                    let sentence;
+
+                    do {
+
+                        sentence =
+                            pick(lib[k]);
+
+                    }
+                    while (
+                        used.has(sentence)
+                    );
+
+                    used.add(sentence);
+
+                    body.push(sentence);
+
+                });
+
+                const brandStatements = [
+
+                    `One thing that stood out was the professionalism of ${pick(brands)}.`,
+                    `I particularly appreciated the dedication shown by ${pick(brands)}.`,
+                    `${pick(brands)} made the entire experience comfortable and reassuring.`,
+                    `The commitment demonstrated by ${pick(brands)} was remarkable.`,
+                    `The quality of service provided by ${pick(brands)} exceeded my expectations.`,
+                    `The attention to detail shown by ${pick(brands)} was remarkable.`,
+                    `${pick(brands)} consistently demonstrated professionalism and compassion.`,
+                    `I was impressed by the commitment shown by ${pick(brands)}.`,
+                    `${pick(brands)} created a positive and reassuring healthcare experience.`,
+                    `The quality standards maintained by ${pick(brands)} were evident throughout my visit.`,
+                    `${pick(brands)} made the entire treatment process smooth and stress-free.`,
+                    `The dedication displayed by ${pick(brands)} exceeded my expectations.`,
+                    `${pick(brands)} clearly prioritizes patient wellbeing and comfort.`,
+                    `I appreciated the coordinated efforts of ${pick(brands)}.`,
+                    `${pick(brands)} maintained excellent communication throughout my treatment journey.`
+
+                ];
+
+                const brandLine =
+                    pick(brandStatements);
+
+                let seoLines = [];
+
+                if (Math.random() < 0.30) {
+
+                    seoLines.push(
+                        `The hospital is known for ${pick(seoMentions)}.`
+                    );
+
+                }
+                if (Math.random() < 0.15) {
+                    seoLines.push(
+                        `The hospital is also known for ${pick(localServiceMentions)}.`
+                    );
+                }
+
+                if (
+                    sel.includes("pathology")
+                    &&
+                    Math.random() < 0.40
+                ) {
+
+                    seoLines.push(
+                        `I was particularly impressed by their ${pick(pathologySeoMentions)}.`
+                    );
+
+                }
+
+                if (
+                    sel.includes("surgeon")
+                    &&
+                    Math.random() < 0.35
+                ) {
+
+                    seoLines.push(
+                        pick(laparoscopicReviewSentences)
+                    );
+
+                    seoLines.push(
+                        `The hospital also offers ${pick(laparoscopicSeoMentions)}.`
+                    );
+
+                }
+
+                const closingLine =
+                    pick(closings);
+
+                const finalParts =
+                    randomStructure(
+                        openingLine,
+                        [toneSentence, ...body],
+                        brandLine,
+                        seoLines,
+                        closingLine
+                    );
+
+                r =
+                    finalParts.join(" ");
+            } while (r === last);
+            last = r;
+            document.getElementById('review').value = r;
+            document.getElementById('box').style.display = 'block';
+            document.getElementById('box')
+                .scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+        }
+        const SCRIPT_URL =
+            "https://script.google.com/macros/s/AKfycbw-pCWG_45x8cWkx8oozGAeazeR7XUrsbS3KBF6SH5gDqxovxMiSpSa5wuFrv0-ZQ4e/exec";
+
+        async function submitGoogleReview() {
+
+            const review =
+                document.getElementById("review").value;
+
+            // Copy immediately
+            await navigator.clipboard.writeText(review);
+
+            // Save analytics in background
+            fetch(SCRIPT_URL, {
+                method: "POST",
+                body: JSON.stringify({
+                    rating: "5",
+                    generatedReview: review
+                })
+            }).catch(() => { });
+
+            // Show popup instantly
+            document.getElementById(
+                "copyModal"
+            ).style.display = "flex";
+
+        }
+        document.getElementById(
+            "continueBtn"
+        ).onclick = function () {
+
+            window.location.href =
+                "https://g.page/r/CQzdArpE6pQyEBM/review";
+
+        };
+    </script>
+
+</body>
+
+</html>
